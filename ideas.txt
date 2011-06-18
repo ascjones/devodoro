@@ -1,0 +1,14 @@
+Devodoro:
+---------
+
+Current Task
+24:59
+
+Pom: A Task 09:00 -> 09:25
+Short Break 09:26 -> 09:28
+Pom: B Task 09:29 -> 09:54
+Pom: C Task 09:55 -> 10:10 [Interrputed]
+
+Team:
+Ian: POM: Task A: 24:59
+Tom: Long break: 03:28
