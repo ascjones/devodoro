@@ -20,12 +20,12 @@
     },
 
     addNewTask: function() {
-      var desc = this.$('input').val();
-      console.log(desc);
+      var input = this.$('input');
+      var desc = input.val();
       var taskView = new CurrentTaskView({model: new Task({description: desc})});
       $('#container').append(taskView.render().el);
-      // prevents the form from submitting
-      event.preventDefault();
+      input.val(""); // clears the input
+      event.preventDefault(); // prevents the form from submitting
     }
 
   });
