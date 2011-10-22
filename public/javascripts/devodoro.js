@@ -22,8 +22,8 @@
     addNewTask: function() {
       var desc = this.$('input').val();
       console.log(desc);
-//      var taskView = new CurrentTaskView({model: new Task({description: desc})});
-//      taskView.render();
+      var taskView = new CurrentTaskView({model: new Task({description: desc})});
+      $('#container').append(taskView.render().el);
       // prevents the form from submitting
       event.preventDefault();
     }
@@ -33,7 +33,7 @@
   CurrentTaskView = Backbone.View.extend({
     initialize: function() {
       _.bindAll(this, 'render');
-      this.template = _template($('#current-task-template').html());
+      this.template = _.template($('#current-task-template').html());
     },
 
     render: function() {
