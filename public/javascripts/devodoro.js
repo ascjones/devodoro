@@ -5,18 +5,34 @@
   });
 
   Timer = Backbone.Model.extend({
-    timeLeft: "25:00"
+    defaults: {
+      minutes: 25,
+      seconds: 0
+    },
+
+    start: function() {
+      var secondsLeft = 60 * 25;
+
+      var that = this;
+      setInterval(function() {
+        secondsLeft = secondsLeft - 1;
+        that.set({minutes: Math.floor(secondsLeft / 60)});
+        that.set({seconds: secondsLeft % 60});
+      }, 1000);
+    }
+
   });
 
   TimerView = Backbone.View.extend({
 
     initialize: function() {
       _.bindAll(this, 'render');
-      this.el = $('#timer');
+      this.template = _.template($('#timer-template').html());
+      this.model.bind('change', this.render);
     },
 
     render: function() {
-      $(this.el).html("25:00");
+      $(this.el).html(this.template(this.model.toJSON()));
       return this;
     }
   });
@@ -65,20 +81,22 @@
     },
 
     initialize: function() {
-      this.timerView = new TimerView();
+      this.timer = new Timer();
+      this.timerView = new TimerView({model: this.timer});
       this.newTaskView = new NewTaskView();
     },
 
     home: function() {
-      this.timerView.render();
       var $container = $('#container');
       $container.empty();
       $container.append(this.newTaskView.render().el);
+      $container.append(this.timerView.render().el);
+      
+      this.timer.start();
     }
   });
 
   $(function() {
-    console.log('initialising');
     window.App = new Devodoro();
     Backbone.history.start();
     $('#new-task').focus();
