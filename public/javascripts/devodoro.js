@@ -41,6 +41,7 @@
     initialize: function() {
       _.bindAll(this, 'render', 'addNewTask');
       this.template = _.template($('#new-task-template').html());
+      this.timer = this.options.timer;
     },
 
     events: {
@@ -58,9 +59,9 @@
       var taskView = new CurrentTaskView({model: new Task({description: desc})});
       $('#container').append(taskView.render().el);
       input.val(""); // clears the input
+      this.timer.start();
       event.preventDefault(); // prevents the form from submitting
     }
-
   });
 
   CurrentTaskView = Backbone.View.extend({
@@ -83,7 +84,7 @@
     initialize: function() {
       this.timer = new Timer();
       this.timerView = new TimerView({model: this.timer});
-      this.newTaskView = new NewTaskView();
+      this.newTaskView = new NewTaskView({timer: this.timer});
     },
 
     home: function() {
@@ -91,8 +92,6 @@
       $container.empty();
       $container.append(this.newTaskView.render().el);
       $container.append(this.timerView.render().el);
-      
-      this.timer.start();
     }
   });
 
