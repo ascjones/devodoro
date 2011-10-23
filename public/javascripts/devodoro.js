@@ -92,8 +92,8 @@
     home: function() {
       var $container = $('#container');
       $container.empty();
-      $container.append(this.newTaskView.render().el);
       $container.append(this.timerView.render().el);
+      $container.append(this.newTaskView.render().el);
     }
   });
 
