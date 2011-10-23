@@ -12,10 +12,12 @@
 
     start: function() {
       var secondsLeft = 60 * 25;
-
       var that = this;
-      setInterval(function() {
+      var interval = setInterval(function() {
         secondsLeft = secondsLeft - 1;
+        if (secondsLeft == 0) {
+          clearInterval(interval);
+        }
         that.set({minutes: Math.floor(secondsLeft / 60)});
         that.set({seconds: secondsLeft % 60});
       }, 1000);
