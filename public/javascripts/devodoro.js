@@ -1,7 +1,24 @@
 (function() {
-  var Task, NewTaskView, CurrentTaskView, Devodoro;
+  var Task, Timer, NewTaskView, CurrentTaskView, Devodoro;
 
   Task = Backbone.Model.extend({
+  });
+
+  Timer = Backbone.Model.extend({
+    timeLeft: "25:00"
+  });
+
+  TimerView = Backbone.View.extend({
+
+    initialize: function() {
+      _.bindAll(this, 'render');
+      this.el = $('#timer');
+    },
+
+    render: function() {
+      $(this.el).html("25:00");
+      return this;
+    }
   });
 
   NewTaskView = Backbone.View.extend({
@@ -48,10 +65,12 @@
     },
 
     initialize: function() {
+      this.timerView = new TimerView();
       this.newTaskView = new NewTaskView();
     },
 
     home: function() {
+      this.timerView.render();
       var $container = $('#container');
       $container.empty();
       $container.append(this.newTaskView.render().el);
