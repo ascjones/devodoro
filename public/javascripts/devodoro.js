@@ -7,10 +7,12 @@
     },
 
     startPomodoro: function(timer) {
+      var that = this;
       this.set({started: new Date()});
       timer.bind('completed', function() {
-        this.set({finished: new Date()});
-        this.set({totalPomos: this.get('totalPomos') + 1});
+        that.set({finished: new Date()});
+        console.log(that.get('totalPomos'));
+        that.set({totalPomos: that.get('totalPomos') + 1});
       });
       timer.start();
     }
@@ -33,7 +35,7 @@
         }
         that.set({minutes: Math.floor(secondsLeft / 60)});
         that.set({seconds: secondsLeft % 60});
-      }, 1);
+      }, 1000);
     }
 
   });
@@ -56,7 +58,6 @@
     initialize: function() {
       _.bindAll(this, 'render', 'addNewTask');
       this.template = _.template($('#new-task-template').html());
-      this.timer = this.options.timer;
     },
 
     events: {
@@ -75,7 +76,7 @@
       var taskView = new CurrentTaskView({model: currentTask});
       $('#container').append(taskView.render().el);
       input.val(""); // clears the input
-      currentTask.startPomodoro(this.timer);
+      currentTask.startPomodoro(Timer);
       event.preventDefault(); // prevents the form from submitting
     }
   });
@@ -84,6 +85,7 @@
     initialize: function() {
       _.bindAll(this, 'render');
       this.template = _.template($('#current-task-template').html());
+      this.model.bind('change', this.render);
     },
 
     render: function() {
@@ -98,9 +100,9 @@
     },
 
     initialize: function() {
-      this.timer = new Timer();
-      this.timerView = new TimerView({model: this.timer});
-      this.newTaskView = new NewTaskView({timer: this.timer});
+      Timer = new Timer();
+      this.timerView = new TimerView({model: Timer});
+      this.newTaskView = new NewTaskView();
     },
 
     home: function() {
