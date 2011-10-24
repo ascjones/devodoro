@@ -11,7 +11,6 @@
       this.set({started: new Date()});
       timer.bind('completed', function() {
         that.set({finished: new Date()});
-        console.log(that.get('totalPomos'));
         that.set({totalPomos: that.get('totalPomos') + 1});
       });
       timer.start();
@@ -41,7 +40,6 @@
   });
 
   TimerView = Backbone.View.extend({
-
     initialize: function() {
       _.bindAll(this, 'render');
       this.template = _.template($('#timer-template').html());
