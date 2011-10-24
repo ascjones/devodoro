@@ -1,7 +1,19 @@
 (function() {
-  var Task, Timer, NewTaskView, CurrentTaskView, Devodoro;
+  var CurrentTask, Timer, NewTaskView, CurrentTaskView, Devodoro;
 
-  Task = Backbone.Model.extend({
+  CurrentTask = Backbone.Model.extend({
+    defaults: {
+      totalPomos: 0
+    },
+
+    startPomodoro: function(timer) {
+      this.set({started: new Date()});
+      timer.bind('completed', function() {
+        this.set({finished: new Date()});
+        this.set({totalPomos: this.get('totalPomos') + 1});
+      });
+      timer.start();
+    }
   });
 
   Timer = Backbone.Model.extend({
@@ -17,10 +29,11 @@
         secondsLeft = secondsLeft - 1;
         if (secondsLeft == 0) {
           clearInterval(interval);
+          that.trigger('completed');
         }
         that.set({minutes: Math.floor(secondsLeft / 60)});
         that.set({seconds: secondsLeft % 60});
-      }, 1000);
+      }, 1);
     }
 
   });
@@ -58,10 +71,11 @@
     addNewTask: function() {
       var input = this.$('input');
       var desc = input.val();
-      var taskView = new CurrentTaskView({model: new Task({description: desc})});
+      var currentTask = new CurrentTask({description: desc});
+      var taskView = new CurrentTaskView({model: currentTask});
       $('#container').append(taskView.render().el);
       input.val(""); // clears the input
-      this.timer.start();
+      currentTask.startPomodoro(this.timer);
       event.preventDefault(); // prevents the form from submitting
     }
   });
