@@ -6,3 +6,21 @@ body {
 a {
   color: #00B7FF;
 }
+
+.button-link {
+  background: white url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAfCAYAAADN/hxhAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADZJREFUeNp0xgkGADAQBMFs7uv/350IEdaYpikDEG728faIGomQNQqhajRC1xiEqbEI2+EIMACyIAbU7Y897gAAAABJRU5ErkJggg==) bottom left repeat-x;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #C6C6C6;
+  border-bottom-color: #888;
+  border-top-color: #CCC;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  margin-top: 6px;
+  max-width: 200px;
+  padding: 6px;
+  position: relative;
+  text-decoration: none;
+}

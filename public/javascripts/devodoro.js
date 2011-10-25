@@ -41,14 +41,22 @@
 
   TimerView = Backbone.View.extend({
     initialize: function() {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'start');
       this.template = _.template($('#timer-template').html());
       this.model.bind('change', this.render);
+    },  
+   
+    events: {
+      "click a.js-start-timer": "start"
     },
 
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       return this;
+    },
+
+    start: function() {
+      this.model.start();
     }
   });
 
@@ -74,6 +82,7 @@
       var taskView = new CurrentTaskView({model: currentTask});
       $('#container').append(taskView.render().el);
       input.val(""); // clears the input
+      input.hide();
       currentTask.startPomodoro(Timer);
       event.preventDefault(); // prevents the form from submitting
     }
