@@ -21,6 +21,7 @@
       <form id="new-task-form">
           <input id="new-task" type="text" />
       </form>
+      <a class="button-link js-add-new-task">Next task</a>
     </script>
 
     <script type="text/template" id="current-task-template">
@@ -38,12 +39,19 @@
       </span>
       <a class="button-link js-start-timer">Start</a>
     </script>
+
+    <script type="text/template" id="logged-task-template">
+      <li><%= description %></li>
+    </script>
   </head>
     
   <body>
     <h1>Devodoro<h1>
     <div id="container">
         
+    </div>
+    <div id="logged-tasks">
+      <ul id="logged-task-list"></ul>
     </div>
   </body>
 </html>

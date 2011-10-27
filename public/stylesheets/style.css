@@ -18,6 +18,7 @@ a {
   cursor: pointer;
   display: block;
   font-weight: bold;
+  font-size: 12px;
   margin-top: 6px;
   max-width: 200px;
   padding: 6px;
