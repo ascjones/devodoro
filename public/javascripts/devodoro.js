@@ -1,5 +1,5 @@
 (function() {
-  var CurrentTask, LoggedTask, Timer, NewTaskView, CurrentTaskView, Devodoro;
+  var CurrentTask, LoggedPomodoro, Timer, NewTaskView, CurrentTaskView, Devodoro;
 
   CurrentTask = Backbone.Model.extend({
     defaults: {
@@ -12,20 +12,20 @@
       timer.bind('completed', function() {
         that.set({finished: new Date()});
         that.set({totalPomos: that.get('totalPomos') + 1});
-        loggedTasks.add(new LoggedTask({description: that.get('description')}));
+        loggedTasks.add(new LoggedPomodoro({description: that.get('description')}));
       });
       timer.start();
     }
   });
 
-  LoggedTask = Backbone.Model.extend({
+  LoggedPomodoro = Backbone.Model.extend({
   });
 
-  LoggedTaskList = Backbone.Collection.extend({
-    model: LoggedTask
+  LoggedPomodoroList = Backbone.Collection.extend({
+    model: LoggedPomodoro
   });
 
-  loggedTasks = new LoggedTaskList();
+  loggedTasks = new LoggedPomodoroList();
 
   Timer = Backbone.Model.extend({
     defaults: {
@@ -112,11 +112,11 @@
     }
   });
 
-  LoggedTaskView = Backbone.View.extend({
+  LoggedPomodoroView = Backbone.View.extend({
     tagName: 'li',
 
     initialize: function() {
-      this.template = _.template($('#logged-task-template').html());
+      this.template = _.template($('#logged-pomodoro-template').html());
       this.render();
     },
 
@@ -126,8 +126,8 @@
     }
   });
 
-  LoggedTaskListView = Backbone.View.extend({
-    el: '#logged-task',
+  LoggedPomodoroListView = Backbone.View.extend({
+    el: '#logged-pomodoro',
 
     initialize: function() {
       _.bindAll(this, 'renderItem');
@@ -135,8 +135,8 @@
     },
 
     renderItem: function(model) {
-      var loggedTaskView = new LoggedTaskView({model: model});
-      this.$('ul').append(loggedTaskView.el);
+      var loggedPomodoroView = new LoggedPomodoroView({model: model});
+      this.$('ul').append(loggedPomodoroView.el);
     }
   });
 
@@ -149,7 +149,7 @@
       Timer = new Timer();
       this.timerView = new TimerView({model: Timer});
       this.newTaskView = new NewTaskView();
-      new LoggedTaskListView();
+      new LoggedPomodoroListView();
     },
 
     home: function() {
