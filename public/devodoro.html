@@ -17,13 +17,6 @@
     <script src="javascripts/backbone.js"></script>
     <script src="javascripts/devodoro.js"></script>
 
-    <script type="text/template" id="new-task-template">
-      <form id="new-task-form">
-          <input id="new-task" type="text" />
-      </form>
-      <a class="button-link js-add-new-task">Next task</a>
-    </script>
-
     <script type="text/template" id="current-task-template">
       <span class="current-task">
         <%= description %>
@@ -49,6 +42,13 @@
     <h1>Devodoro<h1>
 
     <div id="container">
+    </div>
+
+    <div id="new-task-view">
+      <form id="new-task-form">
+          <input id="new-task" type="text" />
+      </form>
+      <a class="button-link js-add-new-task">Next task</a>
     </div>
 
     <div id="current-task-view">

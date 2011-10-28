@@ -71,19 +71,15 @@
   });
 
   NewTaskView = Backbone.View.extend({
+    el: '#new-task-view',
+
     initialize: function() {
-      _.bindAll(this, 'render', 'addNewTask');
-      this.template = _.template($('#new-task-template').html());
+      _.bindAll(this, 'addNewTask');
     },
 
     events: {
       "submit #new-task-form" : "addNewTask",
       "click .js-add-new-task" : "addNewTask" 
-    },
-
-    render: function() {
-      $(this.el).html(this.template($('#new-task-template').html()));
-      return this;  
     },
 
     addNewTask: function() {
@@ -158,7 +154,6 @@
       var $container = $('#container');
       $container.empty();
       $container.append(this.timerView.render().el);
-      $container.append(this.newTaskView.render().el);
     }
   });
 
