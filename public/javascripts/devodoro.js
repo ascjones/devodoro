@@ -50,10 +50,13 @@
   });
 
   TimerView = Backbone.View.extend({
+    el: '#timer-view',
+
     initialize: function() {
       _.bindAll(this, 'render', 'start');
       this.template = _.template($('#timer-template').html());
       this.model.bind('change', this.render);
+      this.render();
     },  
    
     events: {
@@ -145,15 +148,12 @@
 
     initialize: function() {
       Timer = new Timer();
-      this.timerView = new TimerView({model: Timer});
-      this.newTaskView = new NewTaskView();
+      new TimerView({model: Timer});
+      new NewTaskView();
       new LoggedPomodoroListView();
     },
 
     home: function() {
-      var $container = $('#container');
-      $container.empty();
-      $container.append(this.timerView.render().el);
     }
   });
 
