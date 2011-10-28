@@ -91,7 +91,6 @@
       var desc = input.val();
       var currentTask = new CurrentTask({description: desc});
       var taskView = new CurrentTaskView({model: currentTask});
-      $('#container').append(taskView.render().el);
       input.val(""); // clears the input
       input.hide();
       currentTask.startPomodoro(Timer);
@@ -100,10 +99,13 @@
   });
 
   CurrentTaskView = Backbone.View.extend({
+    el: '#current-task-view',
+
     initialize: function() {
       _.bindAll(this, 'render');
       this.template = _.template($('#current-task-template').html());
       this.model.bind('change', this.render);
+      this.render();
     },
 
     render: function() {
