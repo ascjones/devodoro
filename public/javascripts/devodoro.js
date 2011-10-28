@@ -1,18 +1,18 @@
 (function() {
-  var CurrentTask, LoggedPomodoro, Timer, NewTaskView, CurrentTaskView, Devodoro;
+  var timer, currentTask, loggedPomodoros;
 
   CurrentTask = Backbone.Model.extend({
     defaults: {
       totalPomos: 0
     },
 
-    startPomodoro: function(timer) {
+    startPomodoro: function() {
       var that = this;
       this.set({started: new Date()});
       timer.bind('completed', function() {
         that.set({finished: new Date()});
         that.set({totalPomos: that.get('totalPomos') + 1});
-        loggedTasks.add(new LoggedPomodoro({description: that.get('description')}));
+        loggedPomodoros.add(new LoggedPomodoro({description: that.get('description')}));
       });
       timer.start();
     }
@@ -25,7 +25,7 @@
     model: LoggedPomodoro
   });
 
-  loggedTasks = new LoggedPomodoroList();
+  loggedPomodoros = new LoggedPomodoroList();
 
   Timer = Backbone.Model.extend({
     defaults: {
@@ -92,7 +92,7 @@
       var taskView = new CurrentTaskView({model: currentTask});
       input.val(""); // clears the input
       input.hide();
-      currentTask.startPomodoro(Timer);
+      currentTask.startPomodoro();
       event.preventDefault(); // prevents the form from submitting
     }
   });
@@ -132,7 +132,7 @@
 
     initialize: function() {
       _.bindAll(this, 'renderItem');
-      loggedTasks.bind('add', this.renderItem);
+      loggedPomodoros.bind('add', this.renderItem);
     },
 
     renderItem: function(model) {
@@ -147,8 +147,8 @@
     },
 
     initialize: function() {
-      Timer = new Timer();
-      new TimerView({model: Timer});
+      timer = new Timer();
+      new TimerView({model: timer});
       new NewTaskView();
       new LoggedPomodoroListView();
     },
