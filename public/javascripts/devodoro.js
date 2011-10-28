@@ -78,6 +78,7 @@
 
     initialize: function() {
       _.bindAll(this, 'addNewTask');
+      this.$('#new-task').focus();
     },
 
     events: {
@@ -160,6 +161,5 @@
   $(function() {
     window.App = new Devodoro();
     Backbone.history.start();
-    $('#new-task').focus();
   });
 })();
