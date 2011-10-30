@@ -1,6 +1,10 @@
 (function() {
   var timer, currentTask, loggedPomodoros;
 
+  _.templateSettings = {
+    interpolate: /\{\{(.+?)\}\}/g
+  };
+
   CurrentTask = Backbone.Model.extend({
     defaults: {
       totalPomos: 0

@@ -1,5 +1,19 @@
-h1= title
-p Welcome to #{title}
-  u1#completed-pomos
-    li#completed-pomo-template(style='display: none') {{ task }}
+h1 Devodoro
+
+#timer-view
+  span#timer-template(style='display: none') {{ minutes }} : {{ seconds }}
+
+#new-task-view
+  form#new-task-form
+    input#new-task(type='text')
+  a.button-link.js-add-new-task Next Task
+
+#current-task-view
+  span(style='display: none') {{ description }}
+
+#logged-pomodoros
+  ul#logged-pomodoro-list
     
+script(type='text/javascript', src='/javascripts/underscore.js')
+script(type='text/javascript', src='/javascripts/backbone.js')
+script(type='text/javascript', src='/javascripts/devodoro.js')
