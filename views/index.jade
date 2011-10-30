@@ -9,10 +9,11 @@ h1 Devodoro
   a.button-link.js-add-new-task Next Task
 
 #current-task-view
-  span(style='display: none') {{ description }}
+  span#current-task-template(style='display: none') {{ description }}
 
 #logged-pomodoros
   ul#logged-pomodoro-list
+    li#logged-pomodoro-template(style='display: none') {{ description }}
     
 script(type='text/javascript', src='/javascripts/underscore.js')
 script(type='text/javascript', src='/javascripts/backbone.js')
