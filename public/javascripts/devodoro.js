@@ -98,17 +98,17 @@
   });
 
   PomodoroView = Backbone.View.extend({
-    el: '#current-task-view',
+    el: '#pomodoro-view',
 
     initialize: function() {
       _.bindAll(this, 'render');
-      this.template = _.template($('#current-task-template').html());
+      this.template = _.template($('#pomodoro-template').html());
       this.model.bind('change', this.render);
       this.render();
     },
 
     render: function() {
-      $(this.el).html(this.template(this.model.toJSON()));
+      this.$('#current-pomodoro').html(this.template(this.model.toJSON()));
       return this;
     }
   });
