@@ -10,10 +10,10 @@
       totalPomos: 0
     },
 
-    start: function() {
+    start: function () {
       var that = this;
       this.set({started: new Date()});
-      timer.bind('completed', function() {
+      timer.bind('completed', function () {
         that.set({finished: new Date()});
         loggedPomodoros.add(that);
       });
@@ -33,10 +33,10 @@
       seconds: 0
     },
 
-    start: function() {
+    start: function () {
       var secondsLeft = 60 * 25;
       var that = this;
-      var interval = setInterval(function() {
+      var interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
         if (secondsLeft === 0) {
           clearInterval(interval);
@@ -52,7 +52,7 @@
   TimerView = Backbone.View.extend({
     el: '#timer-view',
 
-    initialize: function() {
+    initialize: function () {
       _.bindAll(this, 'render', 'start');
       this.template = _.template($('#timer-template').html());
       this.model.bind('change', this.render);
@@ -63,12 +63,12 @@
       "click a.js-start-timer": "start"
     },
 
-    render: function() {
+    render: function () {
       $(this.el).html(this.template(this.model.toJSON()));
       return this;
     },
 
-    start: function() {
+    start: function () {
       this.model.start();
     }
   });
@@ -76,7 +76,7 @@
   NewTaskView = Backbone.View.extend({
     el: '#new-task-view',
 
-    initialize: function() {
+    initialize: function () {
       _.bindAll(this, 'addNewTask');
       this.$('#new-task').focus();
     },
@@ -85,7 +85,7 @@
       "submit #new-task-form" : "addNewTask",
     },
 
-    addNewTask: function() {
+    addNewTask: function () {
       var input = this.$('input');
       var desc = input.val();
       var currentPomodoro = new Pomodoro({description: desc});
@@ -100,28 +100,32 @@
   PomodoroView = Backbone.View.extend({
     el: '#pomodoro-view',
 
-    initialize: function() {
-      _.bindAll(this, 'render');
+    initialize: function () {
+      _.bindAll(this, 'render', 'hide');
       this.template = _.template($('#pomodoro-template').html());
-      this.model.bind('change', this.render);
+      this.model.bind('change:finished', this.hide);
       this.render();
     },
 
-    render: function() {
+    render: function () {
       this.$('#current-pomodoro').html(this.template(this.model.toJSON()));
       return this;
+    },
+
+    hide: function () {
+      $(this.el).hide();
     }
   });
 
   LoggedPomodoroView = Backbone.View.extend({
     tagName: 'li',
 
-    initialize: function() {
+    initialize: function () {
       this.template = _.template($('#logged-pomodoro-template').html());
       this.render();
     },
 
-    render: function() {
+    render: function () {
       var html = this.template(this.model.toJSON());
       $(this.el).append(html);
     }
@@ -130,12 +134,12 @@
   LoggedPomodoroListView = Backbone.View.extend({
     el: '#logged-pomodoro',
 
-    initialize: function() {
+    initialize: function () {
       _.bindAll(this, 'renderItem');
       loggedPomodoros.bind('add', this.renderItem);
     },
 
-    renderItem: function(model) {
+    renderItem: function (model) {
       var loggedPomodoroView = new LoggedPomodoroView({model: model});
       this.$('ul').append(loggedPomodoroView.el);
     }
@@ -146,18 +150,18 @@
       '': 'home'
     },
 
-    initialize: function() {
+    initialize: function () {
       timer = new Timer();
       new TimerView({model: timer});
       new NewTaskView();
       new LoggedPomodoroListView();
     },
 
-    home: function() {
+    home: function () {
     }
   });
 
-  $(function() {
+  $(function () {
     window.App = new Devodoro();
     Backbone.history.start();
   });
