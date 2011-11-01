@@ -13,7 +13,9 @@ h1 Devodoro
 
 #logged-pomodoros
   ul#logged-pomodoro-list
-    li#logged-pomodoro-template(style='display: none') {{ description }}
+    li#logged-pomodoro-template(style='display: none') 
+      span {{ description }} 
+      span {{ started.getHours() }}:{{ started.getMinutes() }}
     
 script(type='text/javascript', src='/javascripts/underscore.js')
 script(type='text/javascript', src='/javascripts/backbone.js')

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var timer, currentPomodoro, loggedPomodoros;
 
   _.templateSettings = {
@@ -15,7 +15,7 @@
       this.set({started: new Date()});
       timer.bind('completed', function() {
         that.set({finished: new Date()});
-        loggedPomodoros.add(this);
+        loggedPomodoros.add(that);
       });
       timer.start();
     }
@@ -38,7 +38,7 @@
       var that = this;
       var interval = setInterval(function() {
         secondsLeft = secondsLeft - 1;
-        if (secondsLeft == 0) {
+        if (secondsLeft === 0) {
           clearInterval(interval);
           that.trigger('completed');
         }
