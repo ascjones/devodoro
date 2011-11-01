@@ -1,32 +1,28 @@
 (function() {
-  var timer, currentTask, loggedPomodoros;
+  var timer, currentPomodoro, loggedPomodoros;
 
   _.templateSettings = {
     interpolate: /\{\{(.+?)\}\}/g
   };
 
-  CurrentTask = Backbone.Model.extend({
+  Pomodoro = Backbone.Model.extend({
     defaults: {
       totalPomos: 0
     },
 
-    startPomodoro: function() {
+    start: function() {
       var that = this;
       this.set({started: new Date()});
       timer.bind('completed', function() {
         that.set({finished: new Date()});
-        that.set({totalPomos: that.get('totalPomos') + 1});
-        loggedPomodoros.add(new LoggedPomodoro({description: that.get('description')}));
+        loggedPomodoros.add(this);
       });
       timer.start();
     }
   });
 
-  LoggedPomodoro = Backbone.Model.extend({
-  });
-
   LoggedPomodoroList = Backbone.Collection.extend({
-    model: LoggedPomodoro
+    model: Pomodoro
   });
 
   loggedPomodoros = new LoggedPomodoroList();
@@ -93,16 +89,16 @@
     addNewTask: function() {
       var input = this.$('input');
       var desc = input.val();
-      var currentTask = new CurrentTask({description: desc});
-      var taskView = new CurrentTaskView({model: currentTask});
+      var currentPomodoro = new Pomodoro({description: desc});
+      var taskView = new PomodoroView({model: currentPomodoro});
       input.val(""); // clears the input
       input.hide();
-      currentTask.startPomodoro();
+      currentPomodoro.start();
       event.preventDefault(); // prevents the form from submitting
     }
   });
 
-  CurrentTaskView = Backbone.View.extend({
+  PomodoroView = Backbone.View.extend({
     el: '#current-task-view',
 
     initialize: function() {
