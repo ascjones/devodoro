@@ -10,14 +10,20 @@
       totalPomos: 0
     },
 
+    initialize: function () {
+      _.bindAll(this, 'complete');
+      timer.bind('completed', this.complete);
+    },
+
     start: function () {
-      var that = this;
       this.set({started: new Date()});
-      timer.bind('completed', function () {
-        that.set({completed: new Date()});
-        loggedPomodoros.add(that);
-      });
       timer.start();
+    },
+
+    complete: function () {      
+      this.set({completed: new Date()});
+      loggedPomodoros.add(this.toJSON());
+      timer.unbind('completed');
     }
   });
 
@@ -34,7 +40,7 @@
     },
 
     start: function () {
-      var secondsLeft = 60 * 25;
+      var secondsLeft = 1; //60 * 25;
       var that = this;
       var interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
