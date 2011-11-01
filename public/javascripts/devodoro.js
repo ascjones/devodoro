@@ -83,7 +83,6 @@
 
     events: {
       "submit #new-task-form" : "addNewTask",
-      "click .js-add-new-task" : "addNewTask" 
     },
 
     addNewTask: function() {
