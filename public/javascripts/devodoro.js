@@ -14,7 +14,7 @@
       var that = this;
       this.set({started: new Date()});
       timer.bind('completed', function () {
-        that.set({finished: new Date()});
+        that.set({completed: new Date()});
         loggedPomodoros.add(that);
       });
       timer.start();
@@ -87,12 +87,13 @@
 
     addNewTask: function () {
       var input = this.$('input');
-      var desc = input.val();
-      var currentPomodoro = new Pomodoro({description: desc});
+      var currentPomodoro = new Pomodoro({description: input.val()});
       var taskView = new PomodoroView({model: currentPomodoro});
-      input.val(""); // clears the input
-      input.hide();
+      currentPomodoro.bind('change:completed', function () {
+        input.show();
+      });
       currentPomodoro.start();
+      input.hide();
       event.preventDefault(); // prevents the form from submitting
     }
   });
@@ -103,7 +104,7 @@
     initialize: function () {
       _.bindAll(this, 'render', 'hide');
       this.template = _.template($('#pomodoro-template').html());
-      this.model.bind('change:finished', this.hide);
+      this.model.bind('change:completed', this.hide);
       this.render();
     },
 
