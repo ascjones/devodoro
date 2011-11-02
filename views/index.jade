@@ -4,7 +4,7 @@ h1 Devodoro
   span#timer-template(style='display: none') {{ minutes }} : {{ seconds }}
 
 #new-task-view
-  form#new-task-form(action='pomodoro/start', method='post')
+  form#new-task-form(type='text');
     input#new-task(type='text', name='description')
 
 #pomodoro-view

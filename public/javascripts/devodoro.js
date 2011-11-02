@@ -6,9 +6,7 @@
   };
 
   Pomodoro = Backbone.Model.extend({
-    defaults: {
-      totalPomos: 0
-    },
+    urlRoot: '/pomodoros',
 
     initialize: function () {
       _.bindAll(this, 'complete');
@@ -18,6 +16,7 @@
     start: function () {
       this.set({started: new Date()});
       timer.start();
+      this.save();
     },
 
     complete: function () {      
@@ -100,6 +99,7 @@
       });
       currentPomodoro.start();
       input.hide();
+      event.preventDefault() // stop the form from submitting
     }
   });
 

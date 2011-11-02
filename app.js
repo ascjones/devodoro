@@ -38,7 +38,7 @@ app.get('/', function(req, res){
 
 var inMemoryStorage = [];
 
-app.post('/pomodoro/start', function(req, res){
+app.post('/pomodoros', function(req, res){
   var description = req.param('description');
   console.log('starting pomodoro ' + description);
   res.redirect('/');
