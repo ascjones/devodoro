@@ -5,6 +5,8 @@
 
 var express = require('express');
 
+var PomodoroRepository = require('./pomodoro-repository.js').PomodoroRepository;
+
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -32,6 +34,14 @@ app.get('/', function(req, res){
   res.render('index', {
     title: 'Devodoro'
   });
+});
+
+var inMemoryStorage = [];
+
+app.post('/pomodoro/start', function(req, res){
+  var description = req.param('description');
+  console.log('starting pomodoro ' + description);
+  res.redirect('/');
 });
 
 app.listen(3000);

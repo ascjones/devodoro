@@ -100,7 +100,6 @@
       });
       currentPomodoro.start();
       input.hide();
-      event.preventDefault(); // prevents the form from submitting
     }
   });
 
