@@ -59,5 +59,14 @@ app.post('/pomodoros', function(req, res){
   });
 });
 
+app.get('/pomodoros', function (req, res) {
+  console.log('fetching pomodoros');
+  Pomodoro.find({}, function (err, pomodoros) {
+    res.send(pomodoros.map(function(p) {
+      return p.toObject();
+    }));
+  });
+});
+
 app.listen(3000);
 console.log("Devodoro server listening on port %d in %s mode", app.address().port, app.settings.env);
