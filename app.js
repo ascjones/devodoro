@@ -3,11 +3,15 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express'),
+    mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 var PomodoroRepository = require('./pomodoro-repository.js').PomodoroRepository;
 
 var app = module.exports = express.createServer();
+
+mongoose.connect('mongodb://localhost/devodoro');
 
 // Configuration
 
@@ -36,12 +40,23 @@ app.get('/', function(req, res){
   });
 });
 
-var inMemoryStorage = [];
+// define the pomodoro model
+var pomodoroSchema = new Schema({
+  description: { type: String, required: true },
+  started: { type: Date, required: true },
+  completed: Date
+});
+
+mongoose.model('Pomodoro', pomodoroSchema);
+var Pomodoro = mongoose.model('Pomodoro');
 
 app.post('/pomodoros', function(req, res){
   var description = req.param('description');
-  console.log('starting pomodoro ' + description);
-  res.redirect('/');
+  var started = req.param('started');
+  var pomodoro = new Pomodoro(req.body);
+  pomodoro.save(function(err, pomo) {
+    res.redirect('/');
+  });
 });
 
 app.listen(3000);
