@@ -27,10 +27,9 @@
   });
 
   LoggedPomodoroList = Backbone.Collection.extend({
-    model: Pomodoro
+    model: Pomodoro,
+    url: '/pomodoros'
   });
-
-  loggedPomodoros = new LoggedPomodoroList();
 
   Timer = Backbone.Model.extend({
     defaults: {
@@ -160,7 +159,9 @@
       timer = new Timer();
       new TimerView({model: timer});
       new NewTaskView();
+      loggedPomodoros = new LoggedPomodoroList();
       new LoggedPomodoroListView();
+      loggedPomodoros.fetch();
     },
 
     home: function () {

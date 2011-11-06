@@ -15,7 +15,7 @@ h1 Devodoro
   ul#logged-pomodoro-list
     li#logged-pomodoro-template(style='display: none') 
       span {{ description }} 
-      span {{ started.getHours() }}:{{ started.getMinutes() }}
+      span {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
     
 script(type='text/javascript', src='/javascripts/underscore.js')
 script(type='text/javascript', src='/javascripts/backbone.js')

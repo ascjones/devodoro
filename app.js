@@ -63,7 +63,7 @@ app.get('/pomodoros', function (req, res) {
   console.log('fetching pomodoros');
   Pomodoro.find({}, function (err, pomodoros) {
     res.send(pomodoros.map(function(p) {
-      return p.toObject();
+      return p.toJSON();
     }));
   });
 });
