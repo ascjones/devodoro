@@ -140,11 +140,16 @@
     el: '#logged-pomodoro',
 
     initialize: function () {
-      _.bindAll(this, 'renderItem');
-      loggedPomodoros.bind('add', this.renderItem);
+      _.bindAll(this, 'render', 'renderPomodoro');
+      this.collection.bind('add', this.renderPomodoro);
+      this.collection.bind('reset', this.render);
     },
 
-    renderItem: function (model) {
+    render: function() {
+      this.collection.each(this.renderPomodoro);
+    },
+
+    renderPomodoro: function (model) {
       var loggedPomodoroView = new LoggedPomodoroView({model: model});
       this.$('ul').append(loggedPomodoroView.el);
     }
@@ -160,7 +165,7 @@
       new TimerView({model: timer});
       new NewTaskView();
       loggedPomodoros = new LoggedPomodoroList();
-      new LoggedPomodoroListView();
+      new LoggedPomodoroListView({collection: loggedPomodoros});
       loggedPomodoros.fetch();
     },
 
