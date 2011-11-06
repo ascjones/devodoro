@@ -151,7 +151,7 @@
 
     renderPomodoro: function (model) {
       var loggedPomodoroView = new LoggedPomodoroView({model: model});
-      this.$('ul').append(loggedPomodoroView.el);
+      this.$('ul').prepend(loggedPomodoroView.el);
     }
   });
 
