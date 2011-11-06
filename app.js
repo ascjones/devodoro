@@ -51,8 +51,6 @@ mongoose.model('Pomodoro', pomodoroSchema);
 var Pomodoro = mongoose.model('Pomodoro');
 
 app.post('/pomodoros', function(req, res){
-  var description = req.param('description');
-  var started = req.param('started');
   var pomodoro = new Pomodoro(req.body);
   pomodoro.save(function(err, pomo) {
     res.redirect('/');
@@ -60,8 +58,11 @@ app.post('/pomodoros', function(req, res){
 });
 
 app.get('/pomodoros', function (req, res) {
-  console.log('fetching pomodoros');
-  Pomodoro.find({}, function (err, pomodoros) {
+  var today = new Date();
+  var todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  var todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+
+  Pomodoro.find({started: {$gte: todayStart, $lt: todayEnd}}, function (err, pomodoros) {
     res.send(pomodoros.map(function(p) {
       return p.toJSON();
     }));
