@@ -9,13 +9,13 @@ h1 Devodoro
 
 #pomodoro-view
   span#pomodoro-template(style='display: none') {{ description }}
-  #current-pomodoro
+  p#current-pomodoro
 
 #logged-pomodoros
   table#logged-pomodoro-list
     tr#logged-pomodoro-template(style='display: none') 
-      td {{ description }} 
-      td {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
+      td.pomodoro-description {{ description }} 
+      td.pomodoro-started {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
     
 script(type='text/javascript', src='/javascripts/underscore.js')
 script(type='text/javascript', src='/javascripts/backbone.js')

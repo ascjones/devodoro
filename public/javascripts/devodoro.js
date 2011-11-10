@@ -38,7 +38,7 @@
     },
 
     start: function () {
-      var secondsLeft = 1; //60 * 25;
+      var secondsLeft = 60 * 25;
       var that = this;
       var interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
