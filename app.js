@@ -3,9 +3,10 @@
  * Module dependencies.
  */
 
-var express = require('express'),
-    mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var express = require('express')
+    , stylus = require('stylus')
+    , mongoose = require('mongoose')
+    , Schema = mongoose.Schema;
 
 var PomodoroRepository = require('./pomodoro-repository.js').PomodoroRepository;
 
@@ -18,6 +19,18 @@ mongoose.connect('mongodb://localhost/devodoro');
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  // stylus
+  app.use(stylus.middleware({
+    src: __dirname + '/views' // .styl files are located in `views/stylesheets`
+    , debug: true
+    , dest: __dirname + '/public' // .styl resources are compiled `/stylesheets/*.css`
+    , compile: function (str, path) { // optional, but recommended
+        return stylus(str)
+          .set('filename', path)
+          .set('warn', true)
+          .set('compress', true)
+    }
+  }));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
