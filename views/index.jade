@@ -12,10 +12,10 @@ h1 Devodoro
   #current-pomodoro
 
 #logged-pomodoros
-  ul#logged-pomodoro-list
-    li#logged-pomodoro-template(style='display: none') 
-      span {{ description }} 
-      span {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
+  table#logged-pomodoro-list
+    tr#logged-pomodoro-template(style='display: none') 
+      td {{ description }} 
+      td {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
     
 script(type='text/javascript', src='/javascripts/underscore.js')
 script(type='text/javascript', src='/javascripts/backbone.js')

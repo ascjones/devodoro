@@ -123,7 +123,7 @@
   });
 
   LoggedPomodoroView = Backbone.View.extend({
-    tagName: 'li',
+    tagName: 'tr',
 
     initialize: function () {
       this.template = _.template($('#logged-pomodoro-template').html());
@@ -151,7 +151,7 @@
 
     renderPomodoro: function (model) {
       var loggedPomodoroView = new LoggedPomodoroView({model: model});
-      this.$('ul').prepend(loggedPomodoroView.el);
+      this.$('table').prepend(loggedPomodoroView.el);
     }
   });
 
