@@ -19,8 +19,17 @@
       this.save();
     },
 
-    complete: function () {      
-      this.set({completed: new Date()});
+    complete: function () {     
+      this.finish('completed');
+    },
+
+    cancel: function () {
+      this.finish('cancelled');
+    },
+
+    finish: function (status) {
+      console.log('Pomodoro ' + status);
+      this.set({ended: new Date(), status: status});
       loggedPomodoros.add(this.toJSON());
       timer.unbind('completed');
     }
@@ -48,7 +57,7 @@
         }
         that.set({minutes: Math.floor(secondsLeft / 60)});
         that.set({seconds: secondsLeft % 60});
-      }, 1);
+      }, 1000);
     }
 
   });
@@ -106,9 +115,10 @@
     el: '#pomodoro-view',
 
     initialize: function () {
-      _.bindAll(this, 'render', 'hide');
+      _.bindAll(this, 'render', 'hide', 'documentKeyUp');
       this.template = _.template($('#pomodoro-template').html());
       this.model.bind('change:completed', this.hide);
+      $(document).bind('keyup', this.documentKeyUp);
       this.render();
     },
 
@@ -119,6 +129,12 @@
 
     hide: function () {
       $(this.el).hide();
+    },
+
+    documentKeyUp: function(e) {
+      if (e.keyCode === 27) { // escape key
+        this.model.cancel();
+      }
     }
   });
 
