@@ -8,8 +8,6 @@ var express = require('express')
     , mongoose = require('mongoose')
     , Schema = mongoose.Schema;
 
-var PomodoroRepository = require('./pomodoro-repository.js').PomodoroRepository;
-
 var app = module.exports = express.createServer();
 
 mongoose.connect('mongodb://localhost/devodoro');
@@ -57,16 +55,31 @@ app.get('/', function(req, res){
 var pomodoroSchema = new Schema({
   description: { type: String, required: true },
   started: { type: Date, required: true },
-  completed: Date
+  ended: Date,
+  status: { type: String, required: true }
 });
 
 mongoose.model('Pomodoro', pomodoroSchema);
 var Pomodoro = mongoose.model('Pomodoro');
 
+// CREATE
 app.post('/pomodoros', function(req, res){
   var pomodoro = new Pomodoro(req.body);
+  console.log('creating new pomodoro ' + pomodoro.description);
   pomodoro.save(function(err, pomo) {
-    res.redirect('/');
+    res.send(pomo.toJSON());
+  });
+});
+
+// UPDATE
+app.put('/pomodoros/:id', function(req, res) {
+  console.log('put pomodoro ' + req.params.id);
+  Pomodoro.findOne({ _id: req.params.id}, function (err, p) {
+    p.ended = new Date(req.body.ended);
+    p.status = req.body.status;
+    p.save(function (err) {
+      res.send(p.toObject());
+    })
   });
 });
 

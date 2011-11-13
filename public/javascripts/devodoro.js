@@ -5,6 +5,9 @@
     interpolate: /\{\{(.+?)\}\}/g
   };
 
+  // tell backbone to use the default mongodb indetifier name _id
+  Backbone.Model.prototype.idAttribute = "_id";
+
   Pomodoro = Backbone.Model.extend({
     urlRoot: '/pomodoros',
 
@@ -14,9 +17,15 @@
     },
 
     start: function () {
-      this.set({started: new Date()});
       timer.start();
-      this.save();
+      this.save({started: new Date(), status: 'started'}, {
+        success: function (model, response) {
+          console.log('pomodoro saved to server');
+        },
+        error: function() {
+          console.log('error saving pomodoro');
+        }
+      });
     },
 
     complete: function () {     
@@ -31,6 +40,7 @@
       console.log('Pomodoro ' + status);
       this.set({ended: new Date(), status: status});
       loggedPomodoros.add(this.toJSON());
+      this.save();
       timer.unbind('completed');
     }
   });
