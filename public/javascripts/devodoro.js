@@ -33,6 +33,7 @@
     },
 
     cancel: function () {
+      timer.reset();
       this.finish('cancelled');
     },
 
@@ -57,9 +58,9 @@
     },
 
     start: function () {
-      var secondsLeft = 1; // 60 * 25;
+      var secondsLeft = 60 * 25;
       var that = this;
-      var interval = setInterval(function () {
+      this.interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
         if (secondsLeft === 0) {
           clearInterval(interval);
@@ -68,8 +69,12 @@
         that.set({minutes: Math.floor(secondsLeft / 60)});
         that.set({seconds: secondsLeft % 60});
       }, 1000);
-    }
+    },
 
+    reset: function () {
+      clearInterval(this.interval);
+      this.set(this.defaults)
+    }
   });
 
   TimerView = Backbone.View.extend({
@@ -112,7 +117,7 @@
       var input = this.$('input');
       var currentPomodoro = new Pomodoro({description: input.val()});
       var taskView = new PomodoroView({model: currentPomodoro});
-      currentPomodoro.bind('change:completed', function () {
+      currentPomodoro.bind('change:ended', function () {
         input.show();
       });
       currentPomodoro.start();
