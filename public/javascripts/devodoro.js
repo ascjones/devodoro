@@ -13,10 +13,10 @@
 
     initialize: function () {
       _.bindAll(this, 'complete');
-      timer.bind('completed', this.complete);
     },
 
     start: function () {
+      timer.bind('completed', this.complete);
       timer.start();
       this.save({started: new Date(), status: 'started'}, {
         success: function (model, response) {
@@ -57,7 +57,7 @@
     },
 
     start: function () {
-      var secondsLeft = 60 * 25;
+      var secondsLeft = 1; // 60 * 25;
       var that = this;
       var interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
