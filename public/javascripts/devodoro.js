@@ -8,6 +8,10 @@
   // tell backbone to use the default mongodb indetifier name _id
   Backbone.Model.prototype.idAttribute = "_id";
 
+  function pad2(number) {
+    return (number < 10 ? '0' : '') + number;
+  }
+
   Pomodoro = Backbone.Model.extend({
     urlRoot: '/pomodoros',
 
@@ -53,12 +57,12 @@
 
   Timer = Backbone.Model.extend({
     defaults: {
-      minutes: 25,
-      seconds: 0
+      minutes: '25',
+      seconds: '00'
     },
 
     start: function () {
-      var secondsLeft = 10;
+      var secondsLeft = 60 * 25;
       var that = this;
       this.interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
@@ -66,8 +70,8 @@
           clearInterval(that.interval);
           that.trigger('completed');
         }
-        that.set({minutes: Math.floor(secondsLeft / 60)});
-        that.set({seconds: secondsLeft % 60});
+        that.set({minutes: pad2(Math.floor(secondsLeft / 60))});
+        that.set({seconds: pad2(secondsLeft % 60)});
       }, 1000);
     },
 
