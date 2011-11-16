@@ -58,12 +58,12 @@
     },
 
     start: function () {
-      var secondsLeft = 60 * 25;
+      var secondsLeft = 10;
       var that = this;
       this.interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
         if (secondsLeft === 0) {
-          clearInterval(interval);
+          clearInterval(that.interval);
           that.trigger('completed');
         }
         that.set({minutes: Math.floor(secondsLeft / 60)});
