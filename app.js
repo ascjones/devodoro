@@ -10,7 +10,7 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
-mongoose.connect('mongodb://localhost/devodoro');
+mongoose.connect('mongodb://localhost/devodoro_dev');
 
 // Configuration
 
