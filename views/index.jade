@@ -3,11 +3,9 @@ h1 Devodoro
 #timer-view
   span#timer-template(style='display: none') {{ minutes }} : {{ seconds }}
 
-#new-task-view
-  form#new-task-form(type='text')
-    input#new-task(type='text', name='description')
-
 #pomodoro-view
+  form#new-pomodoro-form(type='text')
+    input#new-pomodoro(type='text', name='description')
   span#pomodoro-template(style='display: none') {{ description }}
   p#current-pomodoro
 

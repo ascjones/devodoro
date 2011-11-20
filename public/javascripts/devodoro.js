@@ -110,45 +110,36 @@
     }
   });
 
-  NewTaskView = Backbone.View.extend({
-    el: '#new-task-view',
-
-    initialize: function () {
-      _.bindAll(this, 'addNewTask');
-      this.$('#new-task').focus();
-    },
-
-    events: {
-      "submit #new-task-form" : "addNewTask",
-    },
-
-    addNewTask: function () {
-      var input = this.$('input');
-      var currentPomodoro = new Pomodoro({description: input.val()});
-      var taskView = new PomodoroView({model: currentPomodoro});
-      currentPomodoro.bind('change:ended', function () {
-        input.show();
-      });
-      currentPomodoro.start();
-      input.hide();
-      event.preventDefault() // stop the form from submitting
-    }
-  });
-
   PomodoroView = Backbone.View.extend({
     el: '#pomodoro-view',
 
     initialize: function () {
-      _.bindAll(this, 'render', 'hide', 'documentKeyUp');
+      _.bindAll(this, 'render', 'hide', 'documentKeyUp', 'startNewPomodoro');
       this.template = _.template($('#pomodoro-template').html());
-      this.model.bind('change:ended', this.hide);
+      //this.model.bind('change:ended', this.hide);
       $(document).bind('keyup', this.documentKeyUp);
-      this.render();
+      this.$('#new-pomodoro').focus();
+    },
+    
+    events: {
+      "submit #new-pomodoro-form" : "startNewPomodoro",
     },
 
     render: function () {
       this.$('#current-pomodoro').html(this.template(this.model.toJSON()));
       return this;
+    },
+
+    startNewPomodoro: function () {
+      var input = this.$('input');
+      this.model = new Pomodoro({description: input.val()});
+      this.model.bind('change:ended', function () {
+        input.show();
+      });
+      this.model.start();
+      this.render();
+      input.hide();
+      event.preventDefault() // stop the form from submitting
     },
 
     hide: function () {
@@ -203,7 +194,7 @@
     initialize: function () {
       timer = new Timer();
       new TimerView({model: timer});
-      new NewTaskView();
+      new PomodoroView();
       loggedPomodoros = new LoggedPomodoroList();
       new LoggedPomodoroListView({collection: loggedPomodoros});
       loggedPomodoros.fetch();

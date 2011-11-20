@@ -62,7 +62,7 @@ app.post('/pomodoros', function(req, res){
   var pomodoro = new Pomodoro(req.body);
   console.log('creating new pomodoro ' + pomodoro.description);
   pomodoro.save(function(err, pomo) {
-    //res.send(pomo.toJSON());
+    res.send(pomo.toJSON());
   });
 });
 
