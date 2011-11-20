@@ -1,8 +1,3 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express')
     , stylus = require('stylus')
     , mongoose = require('mongoose')
