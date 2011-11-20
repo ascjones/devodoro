@@ -141,7 +141,7 @@
     initialize: function () {
       _.bindAll(this, 'render', 'hide', 'documentKeyUp');
       this.template = _.template($('#pomodoro-template').html());
-      this.model.bind('change:completed', this.hide);
+      this.model.bind('change:ended', this.hide);
       $(document).bind('keyup', this.documentKeyUp);
       this.render();
     },
