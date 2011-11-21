@@ -1,7 +1,11 @@
-app.get('/register', function(req, res) {
-  res.render('user/register', {
-    locals: {
-      register: new User()
-    }
+module.exports = function(app) {
+
+  app.get('/register', function(req, res) {
+    res.render('user/register', {
+      locals: {
+        register: new User()
+      }
+    });
   });
-});
+
+}
