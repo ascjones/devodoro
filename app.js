@@ -1,13 +1,24 @@
 var express = require('express')
     , stylus = require('stylus')
     , mongoose = require('mongoose')
-    , Schema = mongoose.Schema;
+    , Schema = mongoose.Schema
+    , mongoStore = require('connect-mongodb')
+    , models = require('./models')
+    , db
 
 var app = module.exports = express.createServer();
 
-mongoose.connect('mongodb://localhost/devodoro_dev');
-
 // Configuration
+
+app.configure('development', function() {
+    app.set('db-uri', 'mongodb://localhost/devodoro-dev');
+    app.use(express.errorHandler({ dumpExceptions: true }));
+});
+
+app.configure('production', function() {
+    app.set('db-uri', 'mongodb://localhost/devodoro');
+    app.use(express.errorHandler({ dumpExceptions: true }));
+});
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -25,6 +36,8 @@ app.configure(function(){
     }
   }));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.session({store: mongoStore(db), secret: 'shhhh'}));
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
@@ -45,17 +58,6 @@ app.get('/', function(req, res){
     title: 'Devodoro'
   });
 });
-
-// define the pomodoro model
-var pomodoroSchema = new Schema({
-  description: { type: String, required: true },
-  started: { type: Date, required: true },
-  ended: Date,
-  status: { type: String, required: true }
-});
-
-mongoose.model('Pomodoro', pomodoroSchema);
-var Pomodoro = mongoose.model('Pomodoro');
 
 // CREATE
 app.post('/pomodoros', function(req, res){
@@ -88,6 +90,14 @@ app.get('/pomodoros', function (req, res) {
       return p.toJSON();
     }));
   });
+});
+
+//configure mongoose models
+models.defineModels(mongoose, function() {
+  app.Pomodoro = Pomodoro = mongoose.model('Pomodoro');
+  app.User = User = mongoose.model('User');
+  app.LoginToken = LoginToken = mongoose.model('LoginToken');
+  db = mongoose.connect(app.set('db-uri'));
 });
 
 app.listen(3000);

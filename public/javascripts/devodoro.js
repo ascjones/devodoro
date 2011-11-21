@@ -77,7 +77,7 @@
         }
         that.set({minutes: pad2(Math.floor(secondsLeft / 60))});
         that.set({seconds: pad2(secondsLeft % 60)});
-      }, 1);
+      }, 1000);
     },
 
     reset: function () {
