@@ -51,7 +51,6 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', function(req, res){
   res.render('index', {
     title: 'Devodoro'
@@ -67,7 +66,7 @@ models.defineModels(mongoose, function() {
 });
 
 // require routes
-require('./routes/user');
+require('./routes/user')(app);
 require('./routes/pomodoro')(app);
 
 app.listen(3000);

@@ -25,23 +25,19 @@ exports.AuthHelper = {
   },
 
   loadUser: function(req, res, next) {
-    if (app.set('disableAuthentication') === true)
-      next();
-    else {
-      if (req.session.user_id) {
-        User.findById(req.session.user_id, function(err, user) {
-          if (user) {
-            req.currentUser = user;
-            next();
-          } else {
-            res.redirect('/');
-          }
-        });
-      } else if (req.cookies.logintoken) {
-        authFromLoginToken(req, res, next);
-      } else {
-        res.redirect('/');
-      }
+    if (req.session.user_id) {
+      User.findById(req.session.user_id, function(err, user) {
+        if (user) {
+          req.currentUser = user;
+          next();
+        } else {
+          res.redirect('/');
+        }
+      });
+    } else if (req.cookies.logintoken) {
+      authFromLoginToken(req, res, next);
+    } else {
+      res.redirect('/');
     }
   }
 };
