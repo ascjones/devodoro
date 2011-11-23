@@ -31,13 +31,13 @@ exports.AuthHelper = {
           req.currentUser = user;
           next();
         } else {
-          res.redirect('/');
+          res.redirect('/login');
         }
       });
     } else if (req.cookies.logintoken) {
       authFromLoginToken(req, res, next);
     } else {
-      res.redirect('/');
+      res.redirect('/login');
     }
   }
 };
