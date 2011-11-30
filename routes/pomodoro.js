@@ -22,7 +22,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/pomodoros', auth.loadUser, function (req, res) {
+  app.get('/pomodoros', function (req, res) {
     var today = new Date();
     var todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     var todayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
