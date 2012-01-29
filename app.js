@@ -69,5 +69,14 @@ models.defineModels(mongoose, function() {
 require('./routes/user')(app);
 require('./routes/pomodoro')(app);
 
-app.listen(3000);
+app.listen(process.env.NODE_ENV === 'production' ? 80 : 8000, function() {
+  console.log('Ready');
+
+  //if run as root, downgrade to the owner of this file
+  if (process.getuid() === 0)
+    require('fs').stat(__filename, function(err, stats) {
+      if (err) return console.log(err)
+        process.setuid(stats.uid);
+    });
+});
 console.log("Devodoro server listening on port %d in %s mode", app.address().port, app.settings.env);
