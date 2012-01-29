@@ -7,5 +7,6 @@
     , "jade": "0.0.x"
     , "stylus": "0.x"
     , "mongoose": "2.3.x"
+    , "connect-mongodb": "1.1.x"
   }
 }
