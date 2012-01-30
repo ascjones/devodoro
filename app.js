@@ -7,6 +7,10 @@ var express = require('express')
     , models = require('./models')
     , db
 
+process.on('uncaughtException', function(err) {
+    console.log(err);
+});
+
 // Configuration
 
 app.configure('development', function() {
@@ -70,8 +74,6 @@ require('./routes/user')(app);
 require('./routes/pomodoro')(app);
 
 app.listen(process.env.NODE_ENV === 'production' ? 80 : 8000, function() {
-  console.log('Ready');
-
   //if run as root, downgrade to the owner of this file
   if (process.getuid() === 0)
     require('fs').stat(__filename, function(err, stats) {
