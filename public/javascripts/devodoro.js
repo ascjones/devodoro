@@ -66,7 +66,8 @@
     },
 
     start: function () {
-      var secondsLeft = 60 * 25;
+      //var secondsLeft = 60 * 25;
+      var secondsLeft = 5;
       var that = this;
       this.interval = setInterval(function () {
         secondsLeft = secondsLeft - 1;
@@ -83,6 +84,10 @@
     reset: function () {
       clearInterval(this.interval);
       this.set(this.defaults)
+    },
+
+    getTimeLeft: function() {
+      return this.get('minutes') + ':' + this.get('seconds');
     }
   });
 
@@ -93,6 +98,7 @@
       _.bindAll(this, 'render', 'start');
       this.template = _.template($('#timer-template').html());
       this.model.bind('change', this.render);
+      this.model.bind('completed', this.flash);
       this.render();
     },  
    
@@ -102,7 +108,18 @@
 
     render: function () {
       $(this.el).html(this.template(this.model.toJSON()));
+      $('title').text(this.model.getTimeLeft() + ' Devodoro');
       return this;
+    },
+
+    flash: function() {
+      console.log('completed');
+      $.titleAlert('Pomodoro Complete!', {
+        requireBlur:true,
+        stopOnFocus:true,
+        duration:10000,
+        interval:500
+      });
     },
 
     start: function () {
