@@ -73,7 +73,7 @@ models.defineModels(mongoose, function() {
 require('./routes/user')(app);
 require('./routes/pomodoro')(app);
 
-app.listen(process.env.NODE_ENV === 'production' ? 80 : 8000, function() {
+app.listen(3000, function() {
   //if run as root, downgrade to the owner of this file
   if (process.getuid() === 0)
     require('fs').stat(__filename, function(err, stats) {

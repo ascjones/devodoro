@@ -14,12 +14,12 @@ h1 Devodoro
     tr#logged-pomodoro-template(style='display: none') 
       td.pomodoro-description {{ description }} 
       td.pomodoro-started {{ new Date(started).getHours() }}:{{ new Date(started).getMinutes() }}
-      td.pomodoro-status {{ status }}
+      td.pomodoro-status(class='{{ status }}') {{ status }}
     
-script(type='text/javascript', src='/javascripts/underscore.js')
-script(type='text/javascript', src='/javascripts/backbone.js')
-script(type='text/javascript', src='/javascripts/devodoro.js')
-script(type='text/javascript', src='/javascripts/jquery.titlealert.js')
+script(type='text/javascript', src='./javascripts/underscore.js')
+script(type='text/javascript', src='./javascripts/backbone.js')
+script(type='text/javascript', src='./javascripts/devodoro.js')
+script(type='text/javascript', src='./javascripts/jquery.titlealert.js')
 
 audio#buzzer
   source(src='http://instantrimshot.com/audio/rimshot.mp3')
