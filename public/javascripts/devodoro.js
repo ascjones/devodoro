@@ -13,7 +13,7 @@
   }
 
   Pomodoro = Backbone.Model.extend({
-    urlRoot: '/pomodoros',
+    urlRoot: './pomodoros',
 
     initialize: function () {
       _.bindAll(this, 'complete');
@@ -52,7 +52,7 @@
 
   LoggedPomodoroList = Backbone.Collection.extend({
     model: Pomodoro,
-    url: '/pomodoros'
+    url: './pomodoros'
   });
 
   Timer = Backbone.Model.extend({
