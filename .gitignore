@@ -2,3 +2,5 @@
 *.swp
 *.swo
 /public/stylesheets
+*.sublime-project
+*.sublime-workspace
